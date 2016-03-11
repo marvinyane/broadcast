@@ -1,4 +1,5 @@
 #include <memory>
+#include <vector>
 #include "BroadMessage.h"
 
 class BroadReceive
@@ -11,7 +12,7 @@ class BroadReceive
         void start();
 
         // how filter?
-        int filter();
+        int filter(const std::vector<int>& f);
 
         // handle message in receiver thread? take care?
         virtual void handleMessage(std::shared_ptr<BroadMessage> message) = 0;

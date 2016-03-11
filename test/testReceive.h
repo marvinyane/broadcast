@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 #include "BroadMessage.h"
 #include "BroadReceive.h"
@@ -15,6 +16,10 @@ public:
         : BroadReceive()
     {
         LOGD("start test receive...");
+        std::vector<int> f;
+        f.push_back(STC_BROADMESSAGE_TEST_1);
+        f.push_back(STC_BROADMESSAGE_TEST_2);
+        filter(f);
     }
 
     ~testReceive(){}

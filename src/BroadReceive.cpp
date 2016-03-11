@@ -35,31 +35,45 @@ BroadReceive::BroadReceive()
 
     // replace name ?
     int ret = dbus_bus_request_name(pri->conn,
-                                    "stc.signal.sink",
-                                    DBUS_NAME_FLAG_REPLACE_EXISTING,
-                                    &err);
+            "stc.signal.sink",
+            DBUS_NAME_FLAG_REPLACE_EXISTING,
+            &err);
 
     // check err and ret
 
-    // add filter?
-    dbus_bus_add_match(pri->conn,
-                       "type='signal',interface='test.signal.Type'",
-                       &err);
-
-
-    if (dbus_error_is_set(&err))
-    {
-        LOGD("dbus add match failed.\n");
-    }
-    // check err
-
-    dbus_connection_flush(pri->conn);
 
 }
 
 BroadReceive::~BroadReceive()
 {
     dbus_connection_close(pri->conn);
+}
+
+int BroadReceive::filter(const std::vector<int>& f)
+{
+    DBusError err;
+    dbus_error_init(&err);
+
+    char * tmp = "type='signal',interface='test.signal.Type',member='Test_%04X'";
+    char tmp_new[100];
+
+    auto it = f.begin();
+    for (auto it = f.begin(); it != f.end(); it++)
+    {
+        sprintf(tmp_new, tmp, *it);
+        dbus_bus_add_match(pri->conn,
+                tmp_new,
+                &err);
+
+        if (dbus_error_is_set(&err))
+        {
+            LOGD("dbus add match %d failed.\n", *it);
+        }
+    }
+
+    dbus_connection_flush(pri->conn);
+
+    return 0;
 }
 
 void* BroadReceive::threadRun(void* args)
