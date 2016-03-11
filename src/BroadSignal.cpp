@@ -44,7 +44,7 @@ BroadSignal::~BroadSignal()
     dbus_connection_close(pri->conn);
 }
 
-int BroadSignal::broadcast(std::shared_ptr<BroadMessage> message)
+int BroadSignal::broadcast(BroadMessageSp message)
 {
     dbus_uint32_t serial;
     dbus_connection_send(pri->conn, message->pri->msg, &serial);

@@ -1,6 +1,8 @@
 #ifndef __BROADMESSAGE_H__
 #define __BROADMESSAGE_H__
 
+#include <memory>
+
 class BroadSignal;
 class BroadReceive;
 
@@ -93,6 +95,8 @@ class BroadMessage
  friend class BroadSignal;
 
 };
+
+typedef std::shared_ptr<BroadMessage> BroadMessageSp;
 
 
 #endif

@@ -10,7 +10,7 @@
 class BroadMessageFactory
 {
     public:
-        std::shared_ptr<BroadMessage> createBroadMessage(int id, BroadMessage::Private* pri)
+        BroadMessageSp createBroadMessage(int id, BroadMessage::Private* pri)
         {
             switch (id)
             {

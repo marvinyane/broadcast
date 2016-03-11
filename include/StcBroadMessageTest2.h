@@ -82,5 +82,6 @@ class StcBroadMessageTest2 : public BroadMessage
 
 };
 
+typedef std::shared_ptr<StcBroadMessageTest2> StcBroadMessageTest2Sp;
 
 #endif

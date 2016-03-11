@@ -15,7 +15,7 @@ class BroadReceive
         int filter(const std::vector<int>& f);
 
         // handle message in receiver thread? take care?
-        virtual void handleMessage(std::shared_ptr<BroadMessage> message) = 0;
+        virtual void handleMessage(BroadMessageSp message) = 0;
         
         bool threadLoop();
 
@@ -36,7 +36,7 @@ class BroadReceive
 
         pthread_t tid;
 
-        std::shared_ptr<BroadMessage> message;
+        BroadMessageSp message;
 
 
 };

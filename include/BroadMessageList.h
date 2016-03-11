@@ -35,5 +35,7 @@ class BroadGeneralMessage : public BroadMessage
         }
 };
 
+typedef std::shared_ptr<BroadGeneralMessage> BroadGeneralMessageSp;
+
 
 #endif

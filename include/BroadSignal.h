@@ -1,13 +1,11 @@
-#include <memory>
-
-class BroadMessage;
+#include "BroadMessage.h"
 
 class BroadSignal
 {
     public:
         BroadSignal();
         virtual ~BroadSignal();
-        int broadcast(std::shared_ptr<BroadMessage> message);
+        int broadcast(BroadMessageSp message);
 
     private:
         BroadSignal(const BroadSignal&);

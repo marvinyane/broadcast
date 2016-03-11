@@ -24,14 +24,14 @@ public:
 
     ~testReceive(){}
 
-    virtual void handleMessage(std::shared_ptr<BroadMessage> message)
+    virtual void handleMessage(BroadMessageSp message)
     {
         int id = message->getId();
         switch (id)
         {
             case STC_BROADMESSAGE_TEST_1:
             {
-                std::shared_ptr<StcBroadMessageTest1> msg = std::static_pointer_cast<StcBroadMessageTest1>(message);
+                StcBroadMessageTest1Sp msg = std::static_pointer_cast<StcBroadMessageTest1>(message);
                 const std::string& name = msg->getName();
                 LOGD("receive message 1 name is %s, age is %d\n", name.c_str(), msg->getAge());
                 break;
@@ -39,7 +39,7 @@ public:
 
             case STC_BROADMESSAGE_TEST_2:
             {
-                std::shared_ptr<StcBroadMessageTest2> msg = std::static_pointer_cast<StcBroadMessageTest2>(message);
+                StcBroadMessageTest2Sp msg = std::static_pointer_cast<StcBroadMessageTest2>(message);
                 const std::string& name = msg->getName();
                 LOGD("receive message 2 name is %s, age is %d\n", name.c_str(), msg->getAge());
                 int* _array = msg->getArray();
