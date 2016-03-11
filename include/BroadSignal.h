@@ -5,18 +5,15 @@ class BroadMessage;
 class BroadSignal
 {
     public:
-        BroadSignal(std::shared_ptr<BroadMessage> message);
+        BroadSignal();
         virtual ~BroadSignal();
-        int broadcast();
+        int broadcast(std::shared_ptr<BroadMessage> message);
 
     private:
-        BroadSignal();
         BroadSignal(const BroadSignal&);
         BroadSignal& operator=(const BroadSignal&);
 
     private:
-        std::shared_ptr<BroadMessage> message;
-
         struct Private;
         Private *pri;
 

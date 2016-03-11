@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <pthread.h>
 
 #include "BroadReceive.h"
@@ -68,6 +69,8 @@ void* BroadReceive::threadRun(void* args)
     {
         recv->threadLoop();
     }
+
+    return NULL;
 }
 
 void BroadReceive::start()
@@ -87,8 +90,33 @@ bool BroadReceive::threadLoop()
         return true;
     }
 
-    BroadMessageFactory factory;
 
+    const char* inter = dbus_message_get_interface(msg);
+
+    if (strncmp(inter, STC_MESSAGE_INTERFACE_NAME, STC_MESSAGE_INTERFACE_NAME_LEN) == 0) 
+    {
+        const char* mem = dbus_message_get_member(msg);
+        if (strncmp(mem, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN) == 0) 
+        {
+            int id = atoi(mem+5);
+
+            BroadMessageFactory factory;
+            BroadMessage::Private* pri = new BroadMessage::Private(msg);
+            message = factory.createBroadMessage(id, pri);
+            this->handleMessage(message);
+        }
+        else
+        {
+            LOGD("receive signal is %s\n", mem);
+        }
+    }
+    else 
+    {
+        LOGD("receive interface is  %s \n", inter);
+    }
+
+
+#if 0
     if (dbus_message_is_signal(msg, "test.signal.Type", "Test")) 
     {
         BroadMessage::Private* pri = new BroadMessage::Private(msg);
@@ -103,7 +131,7 @@ bool BroadReceive::threadLoop()
         sleep(1);
         return true;
     }
-LOGD("handle message stop?\n");
+#endif
 
     return true;
 }

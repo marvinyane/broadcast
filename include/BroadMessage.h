@@ -22,6 +22,7 @@ class BroadMessage
              return m_id;
         }
 
+    protected:
         int current_type();
 
         bool at_end();
@@ -78,10 +79,10 @@ class BroadMessage
 
         bool is_array();
 
+        int m_id;
+
     private:
         Private* pri;
-
-        int m_id;
 
         bool append_basic(int type_id, void *value);
         void get_basic(int type_id, void *ptr);

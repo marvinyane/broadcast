@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "BroadMessage.h"
 #include "BroadMessagePrivate.h"
@@ -10,10 +11,15 @@
 BroadMessage::BroadMessage(int id)
     : m_id (id)
 {
+    char tmp[STC_MESSAGE_OBJECT_PREFIX_LEN + 5];
+    memcpy(tmp, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN);
+    sprintf(tmp+STC_MESSAGE_OBJECT_PREFIX_LEN, "%04x", id);
+    tmp[sizeof(tmp)] = 0;
+
     pri = new Private;
-    pri->msg = dbus_message_new_signal("/test/signal/object",
-                                       "test.signal.Type",
-                                       "Test");
+    pri->msg = dbus_message_new_signal(STC_MESSAGE_PATH_NAME,
+                                       STC_MESSAGE_INTERFACE_NAME,
+                                       tmp);
 
     if (pri->msg) {
         dbus_message_iter_init_append(pri->msg, &pri->iter);
@@ -137,4 +143,86 @@ unsigned short BroadMessage::get_uint16()
 	unsigned short u;
 	get_basic(DBUS_TYPE_UINT16, &u);
  	return u;
+}
+
+
+bool BroadMessage::append_bool(bool b)
+{
+	dbus_bool_t db = b ? TRUE : FALSE;
+	return append_basic(DBUS_TYPE_BOOLEAN, &db);
+}
+
+bool BroadMessage::get_bool()
+{
+ 	dbus_bool_t db;
+	get_basic(DBUS_TYPE_BOOLEAN, &db);
+	return db ? true : false;
+}
+
+signed long long BroadMessage::get_int64()
+{
+	signed long long i;
+	get_basic(DBUS_TYPE_INT64, &i);
+	return i;
+}
+
+bool BroadMessage::append_int64(signed long long i)
+{
+	return append_basic(DBUS_TYPE_INT64, &i);
+}
+
+unsigned long long BroadMessage::get_uint64()
+{
+	unsigned long long u;
+	get_basic(DBUS_TYPE_UINT64, &u);
+	return u;
+}
+
+bool BroadMessage::append_uint64(unsigned long long u)
+{
+	return append_basic(DBUS_TYPE_UINT64, &u);
+}
+
+double BroadMessage::get_double()
+{
+	double d;
+	get_basic(DBUS_TYPE_DOUBLE, &d);
+	return d;
+}
+
+bool BroadMessage::append_double(double d)
+{
+	return append_basic(DBUS_TYPE_DOUBLE, &d);
+}
+
+bool BroadMessage::append_array(char type, const void *ptr, int length)
+{
+    DBusMessageIter sub;
+    dbus_message_iter_open_container(&pri->iter, DBUS_TYPE_ARRAY, "i", &sub);
+
+	dbus_message_iter_append_fixed_array(&sub, type, ptr, length);
+
+    dbus_message_iter_close_container(&pri->iter, &sub);
+}
+
+int BroadMessage::array_type()
+{
+	return dbus_message_iter_get_element_type(&pri->iter);
+}
+
+int BroadMessage::get_array(void *ptr)
+{
+	int length;
+
+    DBusMessageIter sub;
+    dbus_message_iter_recurse(&pri->iter, &sub);
+
+	dbus_message_iter_get_fixed_array(&sub, ptr, &length);
+
+	return length;
+}
+
+bool BroadMessage::is_array()
+{
+	return dbus_message_iter_get_arg_type(&pri->iter) == DBUS_TYPE_ARRAY;
 }

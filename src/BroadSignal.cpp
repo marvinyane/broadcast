@@ -8,8 +8,7 @@
 #define LOGD printf
 #define LOGE printf
 
-BroadSignal::BroadSignal(std::shared_ptr<BroadMessage> msg)
-    : message(msg)
+BroadSignal::BroadSignal()
 {
     // create connection
     DBusError err;
@@ -45,7 +44,7 @@ BroadSignal::~BroadSignal()
     dbus_connection_close(pri->conn);
 }
 
-int BroadSignal::broadcast()
+int BroadSignal::broadcast(std::shared_ptr<BroadMessage> message)
 {
     dbus_uint32_t serial;
     dbus_connection_send(pri->conn, message->pri->msg, &serial);
