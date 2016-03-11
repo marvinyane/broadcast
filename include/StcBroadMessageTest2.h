@@ -1,5 +1,5 @@
-#ifndef __STCBROADMESSAGETEST2_H__
-#define __STCBROADMESSAGETEST2_H__
+#ifndef __STC_BROADMESSAGE_TEST_2_H__
+#define __STC_BROADMESSAGE_TEST_2_H__
 
 #include <string.h>
 #include <string>
@@ -81,6 +81,5 @@ class StcBroadMessageTest2 : public BroadMessage
         int             m_array[10];
 
 };
-
 
 #endif

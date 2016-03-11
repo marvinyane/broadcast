@@ -1,7 +1,7 @@
-#include <memory>
+#include "utils/Thread.h"
 #include "BroadMessage.h"
 
-class BroadReceive
+class BroadReceive : public android::Thread
 {
     public:
         // start thread to listen?
@@ -14,11 +14,7 @@ class BroadReceive
         int filter();
 
         // handle message in receiver thread? take care?
-        virtual void handleMessage(std::shared_ptr<BroadMessage> message) = 0;
-        
-        bool threadLoop();
-
-        static void* threadRun(void* args);
+        virtual void handleMessage(android::sp<BroadMessage> message) = 0;
 
     private:
         BroadReceive(const BroadReceive&);
@@ -27,15 +23,13 @@ class BroadReceive
         static void* onHandle(void*);
         void onHandleMessage();
 
+        virtual bool threadLoop();
 
     private:
         struct Private;
         Private *pri;
 
-
-        pthread_t tid;
-
-        std::shared_ptr<BroadMessage> message;
+        android::sp<BroadMessage> message;
 
 
 };

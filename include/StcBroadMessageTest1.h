@@ -1,6 +1,5 @@
-#ifndef __STCBROADMESSAGETEST1_H__
-#define __STCBROADMESSAGETEST1_H__
-
+#ifndef __STC_BROADMESSAGE_TEST_1_H__
+#define __STC_BROADMESSAGE_TEST_1_H__
 
 #include <string.h>
 #include <string>
@@ -66,6 +65,5 @@ class StcBroadMessageTest1 : public BroadMessage
 
 };
 
-
-
 #endif
+

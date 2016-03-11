@@ -1,21 +1,20 @@
 #include "BroadMessage.h"
+#include "BroadMessageList.h"
 #include "BroadSignal.h"
 #include "testReceive.h"
 
 int main()
 {
-    std::shared_ptr<BroadMessage> msg(new StcBroadMessageTest1("marvin", 26));
-    BroadSignal signal;
-    signal.broadcast(msg);
+    android::sp<BroadMessage> msg(new StcBroadMessageTest1("marvin", 26));
+	BroadSignal signal;
+	signal.broadcast(msg);
 
-
-    int _array[] = {3, 45, 67, 98, 100, 1, 2, 3, 4, 5};
-    std::shared_ptr<BroadMessage> msg1(new StcBroadMessageTest2("tom", 27, (int*)_array, 10));
+    int arr[] = {1,2,3,4,5,6,7,8,9,0};
+    android::sp<BroadMessage> msg1(new StcBroadMessageTest2("Tom", 27, arr, 10));
     signal.broadcast(msg1);
-    
-    
-    std::shared_ptr<BroadMessage> msg3(new BroadGeneralMessage(STC_BROADMESSAGE_TEST_3));
-    signal.broadcast(msg3);
+
+    android::sp<BroadMessage> msg2(new BroadGeneralMessage(STC_BROADMESSAGE_TEST_3));
+    signal.broadcast(msg2);
 
     while (1) {
         sleep(100);

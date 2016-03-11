@@ -1,10 +1,12 @@
 #ifndef __BROADMESSAGE_H__
 #define __BROADMESSAGE_H__
 
+#include "utils/RefBase.h"
+
 class BroadSignal;
 class BroadReceive;
 
-class BroadMessage
+class BroadMessage : public android::RefBase
 {
     public:
         struct Private;
@@ -71,7 +73,7 @@ class BroadMessage
 
         const char *get_string();
 
-        bool append_array(char type, const void *ptr, int length);
+        bool append_array(char type, const void *ptr, size_t length);
 
         int array_type();
 

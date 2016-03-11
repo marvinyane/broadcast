@@ -1,17 +1,11 @@
-#include <stdio.h>
-#include <string.h>
-#include <pthread.h>
-
 #include "BroadReceive.h"
 #include "BroadReceivePrivate.h"
 #include "BroadMessage.h"
 #include "BroadMessagePrivate.h"
 
 #include "BroadMessageFactory.h"
-
-#define LOGD printf
-#define LOGE printf
-
+#define LOG_TAG "libbroadcast"
+#include "cutils/log.h"
 
 BroadReceive::BroadReceive()
 {
@@ -62,58 +56,51 @@ BroadReceive::~BroadReceive()
     dbus_connection_close(pri->conn);
 }
 
-void* BroadReceive::threadRun(void* args)
-{
-    BroadReceive* recv = (BroadReceive*)args;
-    while (1) 
-    {
-        recv->threadLoop();
-    }
-
-    return NULL;
-}
-
 void BroadReceive::start()
 {
     LOGD("start run broad receive thread");
-
-    pthread_create(&tid, NULL, &BroadReceive::threadRun, this);
+    run("BroadReceive");
 }
 
 bool BroadReceive::threadLoop()
 {
-    dbus_connection_read_write(pri->conn, 0);
-    DBusMessage* msg = dbus_connection_pop_message(pri->conn);
+    LOGD("broad receive thread loop.... ");
 
-    if (msg == NULL) {
-        sleep(1);
-        return true;
-    }
+    while (1) {
 
+        dbus_connection_read_write(pri->conn, 0);
+        DBusMessage* msg = dbus_connection_pop_message(pri->conn);
 
-    const char* inter = dbus_message_get_interface(msg);
-
-    if (strncmp(inter, STC_MESSAGE_INTERFACE_NAME, STC_MESSAGE_INTERFACE_NAME_LEN) == 0) 
-    {
-        const char* mem = dbus_message_get_member(msg);
-        if (strncmp(mem, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN) == 0) 
-        {
-            int id = atoi(mem+5);
-
-            BroadMessageFactory factory;
-            BroadMessage::Private* pri = new BroadMessage::Private(msg);
-            message = factory.createBroadMessage(id, pri);
-            this->handleMessage(message);
+        if (msg == NULL) {
+            // return true;
+            sleep(1);
+            continue;
         }
-        else
-        {
-            LOGD("receive signal is %s\n", mem);
-        }
-    }
-    else 
-    {
-        LOGD("receive interface is  %s \n", inter);
-    }
+
+	    const char* inter = dbus_message_get_interface(msg);
+
+	    if (strncmp(inter, STC_MESSAGE_INTERFACE_NAME, STC_MESSAGE_INTERFACE_NAME_LEN) == 0) 
+	    {
+	        const char* mem = dbus_message_get_member(msg);
+	        if (strncmp(mem, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN) == 0) 
+	        {
+	            int id = atoi(mem+5);
+
+	            BroadMessageFactory factory;
+	            BroadMessage::Private* pri = new BroadMessage::Private(msg);
+	            message = factory.createBroadMessage(id, pri);
+	            this->handleMessage(message);
+	        }
+	        else
+	        {
+	            LOGD("receive signal is %s\n", mem);
+	        }
+	    }
+	    else 
+	    {
+	        LOGD("receive interface is  %s \n", inter);
+	    }
+	}
 
 
 #if 0

@@ -4,9 +4,8 @@
 #include "BroadMessage.h"
 #include "BroadMessagePrivate.h"
 
-#define LOGE printf
-#define LOGD printf
-
+#define LOG_TAG "libbroadcast"
+#include "cutils/log.h"
 
 BroadMessage::BroadMessage(int id)
     : m_id (id)
@@ -46,8 +45,8 @@ BroadMessage::BroadMessage(int id, BroadMessage::Private *_pri)
 
 BroadMessage::~BroadMessage()
 {
-    // TODO
-    dbus_message_unref(pri->msg);
+    //dbus_message_unref(pri->msg);
+    LOGD("message is destroy....");
 }
 
 int BroadMessage::current_type()
@@ -195,7 +194,7 @@ bool BroadMessage::append_double(double d)
 	return append_basic(DBUS_TYPE_DOUBLE, &d);
 }
 
-bool BroadMessage::append_array(char type, const void *ptr, int length)
+bool BroadMessage::append_array(char type, const void *ptr, size_t length)
 {
     DBusMessageIter sub;
     dbus_message_iter_open_container(&pri->iter, DBUS_TYPE_ARRAY, "i", &sub);
@@ -203,6 +202,8 @@ bool BroadMessage::append_array(char type, const void *ptr, int length)
 	dbus_message_iter_append_fixed_array(&sub, type, ptr, length);
 
     dbus_message_iter_close_container(&pri->iter, &sub);
+
+    return true;
 }
 
 int BroadMessage::array_type()

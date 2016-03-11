@@ -1,12 +1,10 @@
-#include <stdio.h>
-
 #include "BroadMessage.h"
 #include "BroadSignal.h"
 #include "BroadSignalPrivate.h"
 #include "BroadMessagePrivate.h"
 
-#define LOGD printf
-#define LOGE printf
+#define LOG_TAG "libbroadcast"
+#include "cutils/log.h"
 
 BroadSignal::BroadSignal()
 {
@@ -34,7 +32,7 @@ BroadSignal::BroadSignal()
                                     DBUS_NAME_FLAG_REPLACE_EXISTING,
                                     &err);
 
-    LOGD("signal request name is %d.\n", ret);
+    // check err
 
     // check ret
 }
@@ -44,13 +42,11 @@ BroadSignal::~BroadSignal()
     dbus_connection_close(pri->conn);
 }
 
-int BroadSignal::broadcast(std::shared_ptr<BroadMessage> message)
+int BroadSignal::broadcast(android::sp<BroadMessage> message)
 {
     dbus_uint32_t serial;
     dbus_connection_send(pri->conn, message->pri->msg, &serial);
     dbus_connection_flush(pri->conn);
-
-    LOGD("signal has sent.\n");
 
     return 0;
 }

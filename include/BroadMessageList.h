@@ -1,5 +1,6 @@
-#ifndef __BROADMESSAGELIST_H__
-#define __BROADMESSAGELIST_H__
+#ifndef __BROAD_MESSAGE_LIST_H__
+#define __BROAD_MESSAGE_LIST_H__
+
 
 #include "BroadMessage.h"
 
@@ -34,6 +35,5 @@ class BroadGeneralMessage : public BroadMessage
         {
         }
 };
-
 
 #endif

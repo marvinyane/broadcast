@@ -1,32 +1,29 @@
-#ifndef __BROADMESSAGEFACTORY_H__
-#define __BROADMESSAGEFACTORY_H__
+#ifndef __BROAD_MESSAGE_FACTORY_H__
+#define __BROAD_MESSAGE_FACTORY_H__
 
-
-#include <memory>
-
+#include "utils/RefBase.h"
 #include "BroadMessage.h"
 #include "BroadMessageList.h"
 
 class BroadMessageFactory
 {
     public:
-        std::shared_ptr<BroadMessage> createBroadMessage(int id, BroadMessage::Private* pri)
+        android::sp<BroadMessage> createBroadMessage(int id, BroadMessage::Private* pri)
         {
             switch (id)
             {
                 case STC_BROADMESSAGE_TEST_1:
-                    return std::make_shared<StcBroadMessageTest1>(id, pri);
+                    return new StcBroadMessageTest1(id, pri);
 
                 case STC_BROADMESSAGE_TEST_2:
-                    return std::make_shared<StcBroadMessageTest2>(id, pri);
+                    return new StcBroadMessageTest2(id, pri);
 
                 //defualt:
 
             }
 
-            return std::make_shared<BroadGeneralMessage>(id, pri);
+            return new BroadGeneralMessage(id, pri);
         }
 };
-
 
 #endif
