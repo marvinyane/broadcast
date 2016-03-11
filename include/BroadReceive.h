@@ -1,3 +1,4 @@
+#include <vector>
 #include "utils/Thread.h"
 #include "BroadMessage.h"
 
@@ -11,7 +12,7 @@ class BroadReceive : public android::Thread
         void start();
 
         // how filter?
-        int filter();
+        int filter(const std::vector<int>& f);
 
         // handle message in receiver thread? take care?
         virtual void handleMessage(android::sp<BroadMessage> message) = 0;
