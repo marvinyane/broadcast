@@ -4,6 +4,7 @@
 #define LOG_TAG "libbroadcast"
 
 #include "cutils/log.h"
+#include "utils/RefBase.h"
 
 class testReceive : public BroadReceive
 {
@@ -52,3 +53,5 @@ public:
         }
     }
 };
+
+typedef android::sp<testReceive> testReceiveSp;
