@@ -33,6 +33,7 @@ BroadReceive::BroadReceive()
                                     DBUS_NAME_FLAG_REPLACE_EXISTING,
                                     &err);
 
+    dbus_error_init(&err);
 
 }
 
@@ -64,6 +65,8 @@ int BroadReceive::filter(const std::vector<int>& f)
     }
 
     dbus_connection_flush(pri->conn);
+    
+    dbus_error_free(&err);
 
     return 0;
 }

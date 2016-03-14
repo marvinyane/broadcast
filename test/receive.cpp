@@ -4,8 +4,8 @@
 
 int main()
 {
-    testReceive recv;
-    recv.start();
+    testReceiveSp recv;
+    recv->start();
 
     while (1) {
         sleep(100);
