@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "BroadMessage.h"
 #include "BroadReceive.h"
@@ -60,3 +61,5 @@ public:
         }
     }
 };
+
+typedef std::shared_ptr<testReceive> testReceiveSp;

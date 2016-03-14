@@ -41,6 +41,7 @@ BroadReceive::BroadReceive()
 
     // check err and ret
 
+    dbus_error_free(&err);
 
 }
 
@@ -57,7 +58,6 @@ int BroadReceive::filter(const std::vector<int>& f)
     char * tmp = "type='signal',interface='test.signal.Type',member='Test_%04X'";
     char tmp_new[100];
 
-    auto it = f.begin();
     for (auto it = f.begin(); it != f.end(); it++)
     {
         sprintf(tmp_new, tmp, *it);
@@ -72,6 +72,8 @@ int BroadReceive::filter(const std::vector<int>& f)
     }
 
     dbus_connection_flush(pri->conn);
+    
+    dbus_error_free(&err);
 
     return 0;
 }
