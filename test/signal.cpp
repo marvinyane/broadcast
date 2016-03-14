@@ -17,9 +17,7 @@ int main()
     BroadMessageSp msg3(new BroadGeneralMessage(STC_BROADMESSAGE_TEST_3));
     signal.broadcast(msg3);
 
-    while (1) {
-        sleep(100);
-    }
+    sleep(10);
 
     return 0;
 }

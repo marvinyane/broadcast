@@ -7,9 +7,7 @@ int main()
     testReceiveSp recv(new testReceive);
     recv->start();
 
-    while (1) {
-        sleep(100);
-    }
+    sleep(20);
 
     return 0;
 }

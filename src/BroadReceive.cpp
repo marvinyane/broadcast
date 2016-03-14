@@ -47,7 +47,10 @@ BroadReceive::BroadReceive()
 
 BroadReceive::~BroadReceive()
 {
-    dbus_connection_close(pri->conn);
+    if (pri) 
+    {
+        delete pri;
+    }
 }
 
 int BroadReceive::filter(const std::vector<int>& f)

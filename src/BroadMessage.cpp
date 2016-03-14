@@ -39,15 +39,22 @@ BroadMessage::BroadMessage(int id, BroadMessage::Private *_pri)
         dbus_message_iter_init(pri->msg, &pri->iter);
     }
     else {
-        // throw?
+        LOGE("dbus message is null.");
     }
 
 }
 
 BroadMessage::~BroadMessage()
 {
-    // TODO
-    dbus_message_unref(pri->msg);
+    if (pri) 
+    {
+        if (pri->msg) 
+        {
+            dbus_message_unref(pri->msg);
+        }
+
+        delete pri;
+    }
 }
 
 int BroadMessage::current_type()

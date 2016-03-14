@@ -41,7 +41,10 @@ BroadSignal::BroadSignal()
 
 BroadSignal::~BroadSignal()
 {
-    dbus_connection_close(pri->conn);
+    if (pri) 
+    {
+        delete pri;
+    }
 }
 
 int BroadSignal::broadcast(BroadMessageSp message)
