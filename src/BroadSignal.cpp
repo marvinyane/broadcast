@@ -28,6 +28,7 @@ BroadSignal::BroadSignal()
         LOGD("dbus connection is null");
     }
 
+#if 0
     // replace name ?
     int ret = dbus_bus_request_name(pri->conn,
                                     "stc.signal.source",
@@ -37,6 +38,9 @@ BroadSignal::BroadSignal()
     LOGD("signal request name is %d.\n", ret);
 
     // check ret
+#endif
+
+    dbus_error_free(&err);
 }
 
 BroadSignal::~BroadSignal()

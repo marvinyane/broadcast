@@ -13,13 +13,30 @@
 class testReceive : public BroadReceive
 {
 public:
-    testReceive()
+    testReceive(char* l)
         : BroadReceive()
     {
         LOGD("start test receive...");
         std::vector<int> f;
-        f.push_back(STC_BROADMESSAGE_TEST_1);
-        f.push_back(STC_BROADMESSAGE_TEST_2);
+
+        int t = atoi(l);
+        if (t == 0)
+        {
+            f.push_back(STC_BROADMESSAGE_TEST_1);
+            f.push_back(STC_BROADMESSAGE_TEST_2);
+        }
+        else if (t == 1)
+        {
+            f.push_back(STC_BROADMESSAGE_TEST_1);
+            f.push_back(STC_BROADMESSAGE_TEST_3);
+
+        }
+        else
+        {
+            f.push_back(STC_BROADMESSAGE_TEST_1);
+            f.push_back(STC_BROADMESSAGE_TEST_2);
+            f.push_back(STC_BROADMESSAGE_TEST_3);
+        }
         filter(f);
     }
 

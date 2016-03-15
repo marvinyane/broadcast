@@ -14,5 +14,4 @@ class BroadSignal
     private:
         struct Private;
         Private *pri;
-
 };

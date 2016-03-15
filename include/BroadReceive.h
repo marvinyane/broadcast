@@ -1,5 +1,6 @@
 #include <memory>
 #include <vector>
+
 #include "BroadMessage.h"
 
 class BroadReceive
@@ -33,10 +34,7 @@ class BroadReceive
         struct Private;
         Private *pri;
 
-
         pthread_t tid;
 
         BroadMessageSp message;
-
-
 };

@@ -2,9 +2,9 @@
 #include "BroadSignal.h"
 #include "testReceive.h"
 
-int main()
+int main(int argc, char** argv)
 {
-    testReceiveSp recv(new testReceive);
+    testReceiveSp recv(new testReceive(argv[1]));
     recv->start();
 
     sleep(20);

@@ -4,8 +4,9 @@
 
 int main()
 {
-    BroadMessageSp msg(new StcBroadMessageTest1("marvin", 26));
     BroadSignal signal;
+
+    BroadMessageSp msg(new StcBroadMessageTest1("marvin", 26));
     signal.broadcast(msg);
 
 
