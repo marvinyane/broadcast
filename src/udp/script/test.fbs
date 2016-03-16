@@ -1,0 +1,8 @@
+namespace TestFlat;
+
+table StcTestMessage
+{
+    id : uint;
+}
+
+root_type StcTestMessage;

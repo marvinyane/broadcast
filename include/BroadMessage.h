@@ -28,8 +28,7 @@ class BroadMessage
         int m_id;
 
     private:
-        bool append_basic(int type_id, void *value);
-        void get_basic(int type_id, void *ptr);
+
 
         virtual void pack() = 0;
         virtual void unpack() = 0;

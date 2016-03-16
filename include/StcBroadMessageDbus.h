@@ -6,7 +6,8 @@
 #include <string>
 
 #include "BroadMessage.h"
-#include "../src/BroadMessageTool.h"
+#include "BroadMessageList.h"
+#include "BroadMessageTool.h"
 
 class StcBroadMessageTest1 : public BroadMessage
 {

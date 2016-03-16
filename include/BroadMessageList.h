@@ -5,11 +5,13 @@
 
 #define STC_BROADMESSAGE_TEST_1         (0x0001)
 #define STC_BROADMESSAGE_TEST_2         (0x0002)
-
 #define STC_BROADMESSAGE_TEST_3         (0x0003)
 
-// after value define
-#include "StcBroadMessageTest1.h"
+#ifdef BASED_ON_UDP
+#include "StcBroadMessageUdp.h"
+#else
+#include "StcBroadMessageDbus.h"
+#endif
 
 class BroadGeneralMessage : public BroadMessage
 {
