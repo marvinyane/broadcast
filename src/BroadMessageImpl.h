@@ -40,6 +40,8 @@ class BroadMessageImpl
                 LOGE("dbus message new failed.");
             }
 
+            LOGD("dbus message signal created. \n");
+
         }
 
         BroadMessageImpl(char* buf, int len)
@@ -74,11 +76,13 @@ class BroadMessageImpl
         {
             char* buf = NULL;
             int len = 0;
+
+            // TODO:
+            dbus_message_set_serial(msg, 1);
+
             if (!dbus_message_marshal(msg, &buf, &len)) {
                 LOGE("marshaled is failed....\n");
             }
-
-            LOGD("marshal data len is %d\n", len);
 
             return std::string(buf, len);
         }

@@ -33,7 +33,7 @@ public:
 
 #if 0
         // replace name ?
-        int ret = dbus_bus_request_name(pri->conn,
+        int ret = dbus_bus_request_name(conn,
                                         "stc.signal.source",
                                         DBUS_NAME_FLAG_REPLACE_EXISTING,
                                         &err);
@@ -52,11 +52,10 @@ public:
         const std::string& data = msg->getData();
         DBusError err;
         dbus_error_init(&err);
-        LOGD("data length is %d\n", data.length());
         DBusMessage* dmsg = dbus_message_demarshal(data.data(), data.length(), &err);
 
         if (dbus_error_is_set(&err)) {
-            LOGD("demarshal is error!!!\n");
+            LOGD("demarshal is error!!! dmsg is %p\n", dmsg);
         }
 
         dbus_uint32_t serial;

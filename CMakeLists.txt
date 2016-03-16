@@ -22,3 +22,6 @@ ADD_EXECUTABLE(receive  "test/receive.cpp")
 TARGET_LINK_LIBRARIES(receive broadcast)
 TARGET_LINK_LIBRARIES(receive pthread)
 TARGET_LINK_LIBRARIES(receive dbus-1)
+
+ADD_EXECUTABLE(test  "test/test.c")
+TARGET_LINK_LIBRARIES(test dbus-1)
