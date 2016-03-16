@@ -1,3 +1,6 @@
+#ifndef __BROADRECEIVE_H__
+#define __BROADRECEIVE_H__
+
 #include <memory>
 #include <vector>
 
@@ -23,14 +26,10 @@ class BroadReceive : public BroadReceiveMessageHandler
         // how filter?
         int filter(const std::vector<int>& f);
 
-        // handle message in receiver thread? take care?
-        virtual void handleMessage(BroadMessageSp message) = 0;
+        void stop();
         
-
-    private:
-        BroadReceive(const BroadReceive&);
-        BroadReceive& operator=(const BroadReceive&);
-
     private:
         BroadReceiveImpl* m_impl;
 };
+
+#endif
