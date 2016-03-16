@@ -1,5 +1,8 @@
 #include "BroadMessage.h"
 
+
+class BroadSignalImpl;
+
 class BroadSignal
 {
     public:
@@ -8,10 +11,5 @@ class BroadSignal
         int broadcast(BroadMessageSp message);
 
     private:
-        BroadSignal(const BroadSignal&);
-        BroadSignal& operator=(const BroadSignal&);
-
-    private:
-        struct Private;
-        Private *pri;
+        BroadSignalImpl* m_impl;
 };

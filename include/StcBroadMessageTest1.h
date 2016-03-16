@@ -6,6 +6,7 @@
 #include <string>
 
 #include "BroadMessage.h"
+#include "../src/BroadMessageTool.h"
 
 class StcBroadMessageTest1 : public BroadMessage
 {
@@ -15,15 +16,17 @@ class StcBroadMessageTest1 : public BroadMessage
               : BroadMessage(STC_BROADMESSAGE_TEST_1) 
               , m_name(name)
               , m_age(age)
+              , m_tool(this)
         {
             pack();
         }
 
         // this is for reader!
-        StcBroadMessageTest1(int id, BroadMessage::Private* pri) 
-            : BroadMessage(id, pri)
+        StcBroadMessageTest1(int id, char* buf, int len)
+            : BroadMessage(id, buf, len)
             , m_name()
             , m_age(0)
+            , m_tool(this)
         {
             unpack();
         }
@@ -48,21 +51,22 @@ class StcBroadMessageTest1 : public BroadMessage
     private:
         void pack()
         {
-            this->append_uint16(m_id);
-            this->append_string(m_name.c_str());
-            this->append_uint32(m_age);
+            m_tool.append_uint16(m_id);
+            m_tool.append_string(m_name.c_str());
+            m_tool.append_uint32(m_age);
         }
 
         void unpack()
         {
-            m_id = this->get_uint16();
-            m_name = std::string(this->get_string());
-            m_age = this->get_uint32();
+            m_id = m_tool.get_uint16();
+            m_name = std::string(m_tool.get_string());
+            m_age = m_tool.get_uint32();
         }
 
     private:
         std::string     m_name;
         int             m_age;
+        BroadMessageTool m_tool;
 
 };
 

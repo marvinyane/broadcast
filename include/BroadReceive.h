@@ -3,7 +3,15 @@
 
 #include "BroadMessage.h"
 
-class BroadReceive
+class BroadReceiveImpl;
+
+class BroadReceiveMessageHandler
+{
+public:
+    virtual void handleMessage(BroadMessageSp msg) = 0;
+};
+
+class BroadReceive : public BroadReceiveMessageHandler
 {
     public:
         // start thread to listen?
@@ -18,23 +26,11 @@ class BroadReceive
         // handle message in receiver thread? take care?
         virtual void handleMessage(BroadMessageSp message) = 0;
         
-        bool threadLoop();
-
-        static void* threadRun(void* args);
 
     private:
         BroadReceive(const BroadReceive&);
         BroadReceive& operator=(const BroadReceive&);
 
-        static void* onHandle(void*);
-        void onHandleMessage();
-
-
     private:
-        struct Private;
-        Private *pri;
-
-        pthread_t tid;
-
-        BroadMessageSp message;
+        BroadReceiveImpl* m_impl;
 };

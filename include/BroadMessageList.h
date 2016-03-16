@@ -10,7 +10,6 @@
 
 // after value define
 #include "StcBroadMessageTest1.h"
-#include "StcBroadMessageTest2.h"
 
 class BroadGeneralMessage : public BroadMessage
 {
@@ -20,8 +19,8 @@ class BroadGeneralMessage : public BroadMessage
         {
         }
 
-        BroadGeneralMessage(int id, BroadMessage::Private* pri)
-            : BroadMessage(id, pri)
+        BroadGeneralMessage(int id, char* buf, int len)
+            : BroadMessage(id, buf, len)
         {
         }
 
