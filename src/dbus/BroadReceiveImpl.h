@@ -6,7 +6,7 @@
 #include <string.h>
 #include "dbus/dbus.h"
 
-#include "BroadMessageImpl.h"
+#include "BroadSignalImpl.h"
 #include "BroadMessageFactory.h"
 
 #ifndef LOGD
@@ -51,6 +51,10 @@ class BroadReceiveImpl
         void start()
         {
             pthread_create(&tid, NULL, &BroadReceiveImpl::threadRun, this);
+        }
+
+        void stop()
+        {
         }
 
         int filter(const std::vector<int>& f)
@@ -99,14 +103,20 @@ class BroadReceiveImpl
                 const char* mem = dbus_message_get_member(msg);
                 if (strncmp(mem, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN) == 0) 
                 {
-                    int id = atoi(mem+5);
                     char* buf = NULL;
                     int len = 0;
+                    int id = atoi(mem+5);
 
-                    dbus_message_marshal(msg, &buf, &len);
+                    DBusMessageIter dbus_iter;
+                    dbus_message_iter_init(msg, &dbus_iter);
+
+                    DBusMessageIter sub;
+                    dbus_message_iter_recurse(&dbus_iter, &sub);
+
+                    dbus_message_iter_get_fixed_array(&sub, &buf, &len);
 
                     BroadMessageFactory factory;
-                    BroadMessageSp message = factory.createBroadMessage(id, buf, len);
+                    BroadMessageSp message = factory.createBroadMessage(buf, len);
                     m_handler->handleMessage(message);
                 }
                 else

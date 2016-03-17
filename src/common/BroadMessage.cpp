@@ -1,23 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "BroadMessage.h"
-#include "BroadMessageImpl.h"
+
+#define LOGE printf
+#define LOGD printf
+
 
 BroadMessage::BroadMessage(int id)
     : m_id (id)
     , m_data()
-    , m_impl(new BroadMessageImpl)
 {
 }
 
 BroadMessage::BroadMessage(int id, char* buf, int len)
     : m_id (id)
     , m_data(buf, len)
-    , m_impl(new BroadMessageImpl)
 {
 }
 
-void BroadMessage::setData(char* buf, int len)
+BroadMessage::~BroadMessage()
 {
-    m_data = std::string(buf, len);
 }
 
 const std::string& BroadMessage::getData()
@@ -25,7 +28,7 @@ const std::string& BroadMessage::getData()
     return m_data;
 }
 
-BroadMessage::~BroadMessage()
+void BroadMessage::setData(char* buf, int len)
 {
-    delete m_impl;
+    m_data = std::string(buf, len);
 }

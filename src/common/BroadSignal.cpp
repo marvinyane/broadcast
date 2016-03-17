@@ -1,11 +1,14 @@
-#include "BroadMessage.h"
+#include <stdio.h>
+
 #include "BroadSignal.h"
 #include "BroadSignalImpl.h"
+
+#define LOGD printf
+#define LOGE printf
 
 BroadSignal::BroadSignal()
     : m_impl (new BroadSignalImpl)
 {
-    // create udp send
 }
 
 BroadSignal::~BroadSignal()
@@ -15,7 +18,6 @@ BroadSignal::~BroadSignal()
 
 int BroadSignal::broadcast(BroadMessageSp msg)
 {
-    m_impl->broadcast(msg->getData());
-
+    m_impl->broadcast(msg->getId(), msg->getData());
     return 0;
 }

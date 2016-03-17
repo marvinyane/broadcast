@@ -21,7 +21,7 @@ class testReceive : public BroadReceive
             switch (id)
             {
                 case STC_BROADMESSAGE_TEST_1:
-                    StcBroadMessageTest1Sp msg = std::static_pointer_cast<StcBroadMessageTest1>(sp);
+                    StcBroadMessageTestSp msg = std::static_pointer_cast<StcBroadMessageTest>(sp);
                     printf("name is %s, age is %d\n", msg->getName().c_str(), msg->getAge());
                     break;
             }

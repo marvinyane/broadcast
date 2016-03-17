@@ -1,0 +1,8 @@
+namespace BroadFlat;
+
+table StcBroadMessageHeader
+{
+    id : uint;
+}
+
+root_type StcBroadMessageHeader;

@@ -21,7 +21,8 @@ BroadReceive::~BroadReceive()
 
 int BroadReceive::filter(const std::vector<int>& f)
 {
-    return m_impl->filter(f);
+    m_impl->filter(f);
+    return 0;
 }
 
 
@@ -29,5 +30,10 @@ void BroadReceive::start()
 {
     LOGD("start run broad receive thread");
     m_impl->start();
+}
+
+void BroadReceive::stop()
+{
+    m_impl->stop();
 }
 

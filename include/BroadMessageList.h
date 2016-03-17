@@ -7,11 +7,7 @@
 #define STC_BROADMESSAGE_TEST_2         (0x0002)
 #define STC_BROADMESSAGE_TEST_3         (0x0003)
 
-#ifdef BASED_ON_UDP
-#include "StcBroadMessageUdp.h"
-#else
-#include "StcBroadMessageDbus.h"
-#endif
+#include "StcBroadMessage.h"
 
 class BroadGeneralMessage : public BroadMessage
 {

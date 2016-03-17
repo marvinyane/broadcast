@@ -2,7 +2,16 @@
 #define __BROADSIGNALPRIVATE_H__
 
 #include <stdio.h>
+#include <string.h>
 #include "dbus/dbus.h"
+
+#define STC_MESSAGE_PATH_NAME "/test/signal/object"
+
+#define STC_MESSAGE_INTERFACE_NAME "test.signal.Type"
+#define STC_MESSAGE_INTERFACE_NAME_LEN  (16)
+
+#define STC_MESSAGE_OBJECT_PREFIX   "Test_"
+#define STC_MESSAGE_OBJECT_PREFIX_LEN   (5)
 
 #ifndef LOGD
 #define LOGD printf
@@ -47,23 +56,43 @@ public:
 
     }
 
-    int broadcast(BroadMessageSp msg)
+    int broadcast(int id, const std::string& data)
     {
-        const std::string& data = msg->getData();
-        DBusError err;
-        dbus_error_init(&err);
-        DBusMessage* dmsg = dbus_message_demarshal(data.data(), data.length(), &err);
+        DBusMessage *dbus_msg;
+        DBusMessageIter dbus_iter;
 
-        if (dbus_error_is_set(&err)) {
-            LOGD("demarshal is error!!! dmsg is %p\n", dmsg);
-            return -1;
+        char tmp[STC_MESSAGE_OBJECT_PREFIX_LEN + 5];
+        memcpy(tmp, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN);
+        sprintf(tmp+STC_MESSAGE_OBJECT_PREFIX_LEN, "%04x", id);
+        tmp[sizeof(tmp)-1] = 0;
+
+        dbus_msg = dbus_message_new_signal(STC_MESSAGE_PATH_NAME,
+                STC_MESSAGE_INTERFACE_NAME,
+                tmp);
+
+        if (dbus_msg) {
+            dbus_message_iter_init_append(dbus_msg, &dbus_iter);
+        }
+        else {
+            // throw?
+            LOGE("dbus message new failed.");
         }
 
+        DBusMessageIter sub;
+        dbus_message_iter_open_container(&dbus_iter, DBUS_TYPE_ARRAY, "y", &sub);
+
+        const char* buf = data.data();
+
+        dbus_message_iter_append_fixed_array(&sub, DBUS_TYPE_BYTE, &buf, data.length());
+
+        dbus_message_iter_close_container(&dbus_iter, &sub);
+
         dbus_uint32_t serial;
-        dbus_connection_send(conn, dmsg, &serial);
+        dbus_connection_send(conn, dbus_msg, &serial);
         dbus_connection_flush(conn);
 
-        dbus_error_free(&err);
+
+        dbus_message_unref(dbus_msg);
 
         return 0;
     }

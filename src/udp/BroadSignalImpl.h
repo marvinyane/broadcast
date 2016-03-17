@@ -42,7 +42,7 @@ class BroadSignalImpl
                 close (m_fd);
         }
 
-        void broadcast(const std::string& data)
+        void broadcast(int id, const std::string& data)
         {
             if (sendto(m_fd, data.data(), data.length(), 0, (struct sockaddr *)&remaddr, sizeof(remaddr))==-1) {
                 perror("sendto:");

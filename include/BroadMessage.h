@@ -5,7 +5,6 @@
 #include <string>
 
 class BroadMessageImpl;
-class BroadMessageTool;
 
 class BroadMessage
 {
@@ -34,8 +33,6 @@ class BroadMessage
     private:
         std::string m_data;
         BroadMessageImpl* m_impl;
-
-friend class BroadMessageTool;
 
 };
 

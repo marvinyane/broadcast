@@ -1,0 +1,10 @@
+namespace BroadFlat;
+
+table StcBroadMessageTest
+{
+    id : uint;
+    name : string;
+    age  : uint;
+}
+
+root_type StcBroadMessageTest;

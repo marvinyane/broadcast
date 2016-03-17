@@ -65,7 +65,7 @@ class BroadReceiveImpl
                 int recvlen = recvfrom(m_fd, buf, sizeof(buf), 0, (struct sockaddr*)&recvaddr, &addrlen);
                 
                 BroadMessageFactory factory;
-                BroadMessageSp sp = factory.createMessage(buf, recvlen);
+                BroadMessageSp sp = factory.createBroadMessage(buf, recvlen);
 
                 if (std::find(m_filter.begin(), m_filter.end(), sp->getId()) != m_filter.end())
                 {
@@ -79,6 +79,16 @@ class BroadReceiveImpl
         {
             // TODO: thread!
             m_filter = f;
+        }
+
+        void start()
+        {
+
+        }
+
+        void stop()
+        {
+
         }
 
 
