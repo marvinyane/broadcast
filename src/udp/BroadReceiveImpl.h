@@ -97,6 +97,8 @@ void* BroadReceiveImpl::thread_run(void* args)
 {
     BroadReceiveImpl* impl = (BroadReceiveImpl*)args;
     impl->run();
+
+    return NULL;
 }
 
 #endif

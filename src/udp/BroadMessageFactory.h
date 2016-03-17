@@ -23,6 +23,7 @@ class BroadMessageFactory
             }
 
 
+            return std::make_shared<BroadGeneralMessage>(id);
         }
 };
 

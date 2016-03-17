@@ -58,7 +58,7 @@ class BroadReceiveImpl
             DBusError err;
             dbus_error_init(&err);
 
-            char * tmp = "type='signal',interface='test.signal.Type',member='Test_%04X'";
+            const char * tmp = "type='signal',interface='test.signal.Type',member='Test_%04X'";
             char tmp_new[100];
 
             for (auto it = f.begin(); it != f.end(); it++)

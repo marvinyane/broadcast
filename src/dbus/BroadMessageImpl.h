@@ -26,7 +26,7 @@ class BroadMessageImpl
             char tmp[STC_MESSAGE_OBJECT_PREFIX_LEN + 5];
             memcpy(tmp, STC_MESSAGE_OBJECT_PREFIX, STC_MESSAGE_OBJECT_PREFIX_LEN);
             sprintf(tmp+STC_MESSAGE_OBJECT_PREFIX_LEN, "%04x", id);
-            tmp[sizeof(tmp)] = 0;
+            tmp[sizeof(tmp)-1] = 0;
 
             msg = dbus_message_new_signal(STC_MESSAGE_PATH_NAME,
                     STC_MESSAGE_INTERFACE_NAME,
@@ -254,6 +254,8 @@ class BroadMessageImpl
             dbus_message_iter_append_fixed_array(&sub, type, ptr, length);
 
             dbus_message_iter_close_container(&iter, &sub);
+
+            return true;
         }
 
         int array_type()

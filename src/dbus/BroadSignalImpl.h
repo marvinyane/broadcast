@@ -56,6 +56,7 @@ public:
 
         if (dbus_error_is_set(&err)) {
             LOGD("demarshal is error!!! dmsg is %p\n", dmsg);
+            return -1;
         }
 
         dbus_uint32_t serial;
@@ -63,6 +64,8 @@ public:
         dbus_connection_flush(conn);
 
         dbus_error_free(&err);
+
+        return 0;
     }
 
 private:

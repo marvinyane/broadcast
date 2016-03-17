@@ -17,6 +17,7 @@ BroadReceive::~BroadReceive()
 int BroadReceive::filter(const std::vector<int>& f)
 {
     m_impl->filter(f);
+    return 0;
 }
 
 void BroadReceive::start()
